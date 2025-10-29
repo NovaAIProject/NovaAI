@@ -758,6 +758,22 @@ body {
     color: var(--text-secondary);
 }
 
+/* Sidebar Overlay for Mobile */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    display: none;
+}
+
+.sidebar-overlay.open {
+    display: block;
+}
+
 /* Utility Classes */
 .hidden {
     display: none !important;
@@ -858,5 +874,13 @@ body {
 @media (max-width: 768px) {
     .mobile-menu-btn {
         display: flex;
+    }
+    
+    .sidebar-overlay {
+        display: none;
+    }
+    
+    .sidebar-overlay.open {
+        display: block;
     }
     }
