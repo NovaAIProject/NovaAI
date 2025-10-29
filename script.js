@@ -185,9 +185,11 @@ function showApp() {
     appScreen.classList.remove('hidden');
     
     // Update user info
-    userName.textContent = state.currentUser.name;
-    userEmail.textContent = state.currentUser.email;
-    userAvatar.textContent = state.currentUser.initials;
+    if (userName && userEmail && userAvatar) {
+        userName.textContent = state.currentUser.name;
+        userEmail.textContent = state.currentUser.email;
+        userAvatar.textContent = state.currentUser.initials;
+    }
 }
 
 // Theme Functions
@@ -237,7 +239,9 @@ function loadChat(chatId) {
     const chat = state.chats.find(c => c.id === chatId);
     
     if (chat) {
-        modelSelector.value = chat.model;
+        if (modelSelector) {
+            modelSelector.value = chat.model;
+        }
         renderChatMessages(chat);
         
         // Update active chat in sidebar
@@ -250,7 +254,7 @@ function loadChat(chatId) {
 }
 
 function deleteChat(chatId, e) {
-    e.stopPropagation();
+    if (e) e.stopPropagation();
     if (confirm('Are you sure you want to delete this chat?')) {
         state.chats = state.chats.filter(chat => chat.id !== chatId);
         
@@ -268,7 +272,7 @@ function deleteChat(chatId, e) {
 }
 
 function duplicateChat(chatId, e) {
-    e.stopPropagation();
+    if (e) e.stopPropagation();
     const originalChat = state.chats.find(chat => chat.id === chatId);
     if (originalChat) {
         const newChat = {
@@ -288,7 +292,7 @@ function duplicateChat(chatId, e) {
 }
 
 function renameChat(chatId, e) {
-    e.stopPropagation();
+    if (e) e.stopPropagation();
     const chat = state.chats.find(chat => chat.id === chatId);
     if (chat) {
         const newTitle = prompt('Enter new chat title:', chat.title);
@@ -372,7 +376,7 @@ function simulateAIResponse(userMessage) {
 
     // Generate response based on mode and model
     let response = '';
-    const model = modelSelector.value;
+    const model = modelSelector ? modelSelector.value : 'gpt-5';
     
     if (state.currentMode === 'code') {
         response = generateCodeResponse(userMessage, model);
@@ -547,6 +551,8 @@ function stopVoiceInput() {
 
 // UI Helper Functions
 function renderChatHistory() {
+    if (!chatHistory) return;
+    
     chatHistory.innerHTML = '';
     
     if (state.chats.length === 0) {
@@ -576,12 +582,4 @@ function renderChatHistory() {
                 </button>
                 <button class="chat-action-btn delete-chat" title="Delete">
                     <i class="fas fa-trash"></i>
-                </button>
-            </div>
-        `;
-        
-        // Chat item click
-        chatItem.addEventListener('click', () => loadChat(chat.id));
-        
-        // Chat actions
-        co
+              
