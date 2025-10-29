@@ -1,160 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova AI - Modern AI Assistant</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova AI</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  #login-container, #nova-ai {
+    width: 350px;
+    padding: 30px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  #nova-ai {
+    display: none;
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #4a90e2;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  button:hover {
+    background: #357ab8;
+  }
+  .toggle {
+    text-align: center;
+    margin-top: 12px;
+    cursor: pointer;
+    color: #4a90e2;
+  }
+</style>
 </head>
 <body>
-    <!-- Auth Screen -->
-    <div class="auth-container" id="authScreen">
-        <div class="auth-header">
-            <h1>Nova AI</h1>
-            <p>Your intelligent assistant for the future</p>
-        </div>
-        <div class="auth-content">
-            <div class="auth-form-container">
-                <div class="auth-tabs">
-                    <button class="auth-tab active" id="loginTab">Login</button>
-                    <button class="auth-tab" id="signupTab">Sign Up</button>
-                </div>
-                
-                <form id="loginForm" class="auth-form">
-                    <div class="form-group">
-                        <label for="loginEmail">Email</label>
-                        <input type="email" id="loginEmail" placeholder="Enter your email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="loginPassword">Password</label>
-                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-sign-in-alt"></i> Login to Nova AI
-                    </button>
-                </form>
-                
-                <form id="signupForm" class="auth-form hidden">
-                    <div class="form-group">
-                        <label for="signupName">Full Name</label>
-                        <input type="text" id="signupName" placeholder="Enter your full name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="signupEmail">Email</label>
-                        <input type="email" id="signupEmail" placeholder="Enter your email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="signupPassword">Password</label>
-                        <input type="password" id="signupPassword" placeholder="Create a password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-user-plus"></i> Create Account
-                    </button>
-                </form>
-                
-                <div class="divider">
-                    <span>or continue with</span>
-                </div>
-                
-                <div class="auth-form">
-                    <button class="btn btn-google" id="googleAuthBtn">
-                        <i class="fab fa-google"></i> Google
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="auth-footer">
-            <p>By continuing, you agree to our Terms of Service and Privacy Policy</p>
-        </div>
-    </div>
 
-    <!-- Main App -->
-    <div class="app-main hidden" id="appScreen">
-        <!-- Sidebar Overlay for Mobile -->
-        <div class="sidebar-overlay" id="sidebarOverlay"></div>
-        
-        <!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <div class="logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <span>Nova AI</span>
-                </div>
-                <button class="new-chat-btn" id="newChatBtn">
-                    <i class="fas fa-plus"></i>
-                </button>
-            </div>
-            
-            <div class="chat-history" id="chatHistory">
-                <!-- Chat history will be populated by JavaScript -->
-            </div>
-            
-            <div class="sidebar-footer">
-                <div class="user-info" id="userInfo">
-                    <div class="user-avatar" id="userAvatar">U</div>
-                    <div class="user-details">
-                        <div id="userName">User</div>
-                        <div class="text-xs" id="userEmail">user@example.com</div>
-                    </div>
-                </div>
-                <div class="theme-toggle" id="themeToggle">
-                    <span>Dark Mode</span>
-                    <i class="fas fa-moon"></i>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="chat-header">
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="model-selector">
-                    <span class="text-sm">AI Model:</span>
-                    <select class="model-dropdown" id="modelSelector">
-                        <option value="gpt-5">GPT-5</option>
-                        <option value="claude-3.5">Claude 3.5</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="chat-messages" id="chatMessages">
-                <!-- Messages will be populated by JavaScript -->
-            </div>
-            
-            <div class="chat-input-container">
-                <div class="input-actions">
-                    <div class="mode-buttons">
-                        <button class="mode-btn active" data-mode="chat">💬 Chat</button>
-                        <button class="mode-btn" data-mode="code">💻 Code</button>
-                        <button class="mode-btn" data-mode="image">🖼️ Image</button>
-                    </div>
-                </div>
-                
-                <div class="chat-input-wrapper">
-                    <textarea class="chat-input" id="chatInput" placeholder="Message Nova AI..." rows="1"></textarea>
-                    <button class="voice-btn" id="voiceBtn">
-                        <i class="fas fa-microphone"></i>
-                    </button>
-                    <button class="send-btn" id="sendBtn">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
-                
-                <div class="text-center mt-2">
-                    <button class="stop-btn hidden" id="stopBtn">
-                        <i class="fas fa-stop"></i> Stop Generating
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+<div id="login-container">
+  <h2 id="form-title">Login</h2>
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+  <button id="submit-btn">Login</button>
+  <div class="toggle" id="toggle-form">Don't have an account? Sign Up</div>
+</div>
 
-    <script src="script.js"></script>
+<div id="nova-ai">
+  <h2>Welcome to Nova AI</h2>
+  <p>This is the main interface.</p>
+  <p>Add your sidebar, chats, and AI features here.</p>
+</div>
+
+<script>
+  const toggleForm = document.getElementById('toggle-form');
+  const formTitle = document.getElementById('form-title');
+  const submitBtn = document.getElementById('submit-btn');
+  const loginContainer = document.getElementById('login-container');
+  const novaAI = document.getElementById('nova-ai');
+
+  let isLogin = true;
+
+  toggleForm.addEventListener('click', () => {
+    isLogin = !isLogin;
+    formTitle.textContent = isLogin ? 'Login' : 'Sign Up';
+    submitBtn.textContent = isLogin ? 'Login' : 'Sign Up';
+    toggleForm.textContent = isLogin ? "Don't have an account? Sign Up" : "Already have an account? Login";
+  });
+
+  submitBtn.addEventListener('click', () => {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if (!username || !password) {
+      alert('Please enter both username and password');
+      return;
+    }
+
+    // Fake login/signup logic
+    loginContainer.style.opacity = '0';
+    loginContainer.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+      loginContainer.style.display = 'none';
+      novaAI.style.display = 'block';
+      novaAI.style.opacity = '0';
+      novaAI.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        novaAI.style.opacity = '1';
+        novaAI.style.transform = 'scale(1)';
+      }, 50);
+    }, 300);
+  });
+</script>
+
 </body>
-                    </html>
+</html>
