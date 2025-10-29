@@ -123,6 +123,12 @@ function handleLogin(e) {
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
     
+    // Simple validation
+    if (!email || !password) {
+        alert('Please fill in all fields');
+        return;
+    }
+    
     // Simulate login
     state.currentUser = {
         name: 'Demo User',
@@ -139,6 +145,12 @@ function handleSignup(e) {
     const name = document.getElementById('signupName').value;
     const email = document.getElementById('signupEmail').value;
     const password = document.getElementById('signupPassword').value;
+    
+    // Simple validation
+    if (!name || !email || !password) {
+        alert('Please fill in all fields');
+        return;
+    }
     
     // Simulate signup
     state.currentUser = {
@@ -572,8 +584,4 @@ function renderChatHistory() {
         chatItem.addEventListener('click', () => loadChat(chat.id));
         
         // Chat actions
-        const renameBtn = chatItem.querySelector('.rename-chat');
-        const duplicateBtn = chatItem.querySelector('.duplicate-chat');
-        const deleteBtn = chatItem.querySelector('.delete-chat');
-        
-        renameBtn.addEventListener('click', (e) => renameCha
+        co
